@@ -1,0 +1,37 @@
+# -----------------------------------------------------------------------------
+# Frontend Deployment
+#
+# Deploys the React frontend application.
+# Kubernetes pulls the Docker image from Amazon ECR.
+# -----------------------------------------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: aero-nexus-maintenance-frontend
+  labels:
+    app: aero-nexus-maintenance-frontend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: aero-nexus-maintenance-frontend
+
+  template:
+    metadata:
+      labels:
+        app: aero-nexus-maintenance-frontend
+
+    spec:
+      containers:
+        - name: aero-nexus-maintenance-frontend
+
+          image: ${FRONTEND_IMAGE}
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 3000
